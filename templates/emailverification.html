@@ -69,15 +69,15 @@ a {
 </head>
 <body>
 
- <form action="verify" method="post">
+ <form action="analyse" method="post">
      {% csrf_token %} 
    <div class="container">
         <h1>Verify</h1>
 
         <hr>
 
-        <label for="Email"><b>Email</b></label>
-        <input type="text" placeholder="Enter Email" name="email" required>
+        <label for="Text"><b>Text</b></label>
+        <input type="text" placeholder="Enter Text" name="text" required>
 
 
 
