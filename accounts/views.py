@@ -22,7 +22,7 @@ from nltk.sentiment import SentimentIntensityAnalyzer
 def analyse(request):
                 
               if request.method== 'POST':
-                     speech = request.POST['speech']
+                     text = request.POST['text']
                      # create SentimentIntensityAnalyzer object
                      sia = SentimentIntensityAnalyzer()
                      # get sentiment score
