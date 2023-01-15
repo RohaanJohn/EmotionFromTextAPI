@@ -15,30 +15,28 @@ from pathlib import Path
 from PIL import Image, ImageOps
 from datetime import datetime
 import re
-
-
+import nltk
+from nltk.sentiment import SentimentIntensityAnalyzer
 # Create your views here.
 @api_view(['GET', 'POST'])
-def verify(request):
+def analyse(request):
                 
               if request.method== 'POST':
-                    email = request.POST['email']
-                    regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
- 
-                    # Define a function for
-                    # for validating an Email
-
- 
-                    # pass the regular expression
-                    # and the string into the fullmatch() method
-                    if(re.fullmatch(regex, email)):
-                        return Response({"output":"Valid"})
- 
-                    else:
-                        return Response({"output":"Invalid"})
-                       
+                     speech = request.POST['speech']
+                     # create SentimentIntensityAnalyzer object
+                     sia = SentimentIntensityAnalyzer()
+                     # get sentiment score
+                     score = sia.polarity_scores(text)
+                     # get the compound score, which represents the overall emotion
+                     compound_score = score['compound']
+                     if compound_score >= 0.5:
+                         return Response({"output":"Positive Emotion"})
+                     elif compound_score > -0.5 and compound_score < 0.5:
+                         return Response({"output":"Neutral Emotion"})
+                     else:
+                         return Response({"output":"Negative Emotion"})
               else:
-                return render(request,'emailverification.html')
+                return render(request,'analyse.html')
    # [(0 is Happy), (1 is Angry), (2 is Sad), (3 is Fear)]
 
 
