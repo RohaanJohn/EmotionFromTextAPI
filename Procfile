@@ -1,3 +1,2 @@
-release: python manage.py migrate
+release: python manage.py migrate && python nltk.download('vader_lexicon')
 web: gunicorn telusko.wsgi --log-file=-
-web: python nltk.downloader vader_lexicon
