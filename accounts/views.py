@@ -28,9 +28,9 @@ def analyse(request):
                      if score['compound'] >= 0.05:
                           return Response({"output":"Happy"})
                      elif score['compound'] <= -0.05:
-                          if score['neg'] > scores['pos']:
+                          if score['neg'] > score['pos']:
                                return Response({"output":"Sad"})
-                          elif score['neg'] < scores['pos']:
+                          elif score['neg'] < score['pos']:
                                return Response({"output":"Angry"})
                           else:
                                return Response({"output":"Fear"})
