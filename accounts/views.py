@@ -23,18 +23,19 @@ def analyse(request):
                 
               if request.method== 'POST':
                      text = request.POST['text']
-                     # create SentimentIntensityAnalyzer object
                      sia = SentimentIntensityAnalyzer()
-                     # get sentiment score
                      score = sia.polarity_scores(text)
-                     # get the compound score, which represents the overall emotion
-                     compound_score = score['compound']
-                     if compound_score >= 0.5:
-                         return Response({"output":"Positive Emotion"})
-                     elif compound_score > -0.5 and compound_score < 0.5:
-                         return Response({"output":"Neutral Emotion"})
+                     if scores['compound'] >= 0.05:
+                          return Response({"output":"Happy"})
+                     elif scores['compound'] <= -0.05:
+                          if scores['neg'] > scores['pos']:
+                               return Response({"output":"Sad"})
+                          elif scores['neg'] < scores['pos']:
+                               return Response({"output":"Angry"})
+                          else:
+                               return Response({"output":"Fear"})
                      else:
-                         return Response({"output":"Negative Emotion"})
+                        return Response({"output":"Neutral"})
               else:
                 return render(request,'analyse.html')
    # [(0 is Happy), (1 is Angry), (2 is Sad), (3 is Fear)]
