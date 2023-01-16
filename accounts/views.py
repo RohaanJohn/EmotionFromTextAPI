@@ -25,12 +25,12 @@ def analyse(request):
                      text = request.POST['text']
                      sia = SentimentIntensityAnalyzer()
                      score = sia.polarity_scores(text)
-                     if scores['compound'] >= 0.05:
+                     if score['compound'] >= 0.05:
                           return Response({"output":"Happy"})
-                     elif scores['compound'] <= -0.05:
-                          if scores['neg'] > scores['pos']:
+                     elif score['compound'] <= -0.05:
+                          if score['neg'] > scores['pos']:
                                return Response({"output":"Sad"})
-                          elif scores['neg'] < scores['pos']:
+                          elif score['neg'] < scores['pos']:
                                return Response({"output":"Angry"})
                           else:
                                return Response({"output":"Fear"})
